@@ -75,9 +75,17 @@
 </head>
 <body>
   <h1>Demande d'information</h1>
-  <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+  <form 
+    action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+    method="POST"
+    onsubmit="prepareParcoursJson()"
+  >
     <input type="hidden" name="oid" value="00DDp000000fQpq" />
     <input type="hidden" name="retURL" value="https://djamouha.github.io/formulaires/merci.html" />
+
+    <!-- Champs cachés -->
+    <input type="hidden" id="parcours" name="Parcours__c" value="">
+    <input type="hidden" id="parcours_json" name="ParcoursJson__c" value="">
 
     <!-- Infos de base -->
     <label for="first_name">Prénom</label>
@@ -126,7 +134,7 @@
       <input type="text" id="modele" name="Modele__c">
 
       <label for="annee">Année d'immatriculation</label>
-      <input type="text" id="annee" name="Annee_Immatriculation__c">
+      <input type="text" id="annee" name="Annee_Immatriculation__c" maxlength="7">
 
       <label for="energie">Énergie</label>
       <select id="energie" name="Energie__c">
@@ -169,11 +177,49 @@
   </form>
 
   <script>
+    let currentParcours = '';
+
     function showSection(sectionId) {
       const sections = ['sante', 'auto', 'mrh'];
       sections.forEach(id => {
         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
       });
+
+      const parcoursMap = {
+        sante: 'Sante',
+        auto: 'IARD',
+        mrh: 'MRH'
+      };
+      currentParcours = parcoursMap[sectionId];
+      document.getElementById('parcours').value = currentParcours;
+    }
+
+    function prepareParcoursJson() {
+      let data = {};
+
+      if (currentParcours === 'Sante') {
+        data = {
+          produit: document.getElementById('produit_sante').value,
+          modePaiement: document.getElementById('paiement').value
+        };
+      } else if (currentParcours === 'IARD') {
+        data = {
+          marque: document.getElementById('marque').value,
+          modele: document.getElementById('modele').value,
+          anneeImmatriculation: document.getElementById('annee').value,
+          energie: document.getElementById('energie').value,
+          puissanceFiscale: document.getElementById('puissance').value,
+          couleur: document.getElementById('couleur').value
+        };
+      } else if (currentParcours === 'MRH') {
+        data = {
+          surface: document.getElementById('surface').value,
+          typeResidence: document.getElementById('residence').value,
+          alarme: document.getElementById('alarme').value
+        };
+      }
+
+      document.getElementById('parcours_json').value = JSON.stringify(data);
     }
   </script>
 </body>
