@@ -170,4 +170,11 @@
 
   <script>
     function showSection(sectionId) {
-      const sections = ['sante', 'auto', 'mr
+      const sections = ['sante', 'auto', 'mrh'];
+      sections.forEach(id => {
+        document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
