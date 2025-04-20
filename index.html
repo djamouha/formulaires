@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire Web-to-Lead</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .button-group button {
+      flex: 1;
+      margin: 0 10px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .button-group button:hover {
+      background-color: #0056b3;
+    }
+    .section {
+      display: none;
+      margin-top: 20px;
+    }
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 15px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 10px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Demande d'information</h1>
+  <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+    <input type="hidden" name="oid" value="00DDp000000fQpq" />
+    <input type="hidden" name="retURL" value="https://djamouha.github.io/formulaires/merci.html" />
 
+    <!-- Infos de base -->
+    <label for="first_name">Prénom</label>
+    <input type="text" id="first_name" name="first_name" required>
+
+    <label for="last_name">Nom</label>
+    <input type="text" id="last_name" name="last_name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Téléphone</label>
+    <input type="tel" id="phone" name="phone">
+
+    <!-- Choix de parcours -->
+    <div class="button-group">
+      <button type="button" onclick="showSection('sante')">Parcours Santé</button>
+      <button type="button" onclick="showSection('auto')">Parcours IARD Auto</button>
+      <button type="button" onclick="showSection('mrh')">Parcours MRH</button>
+    </div>
+
+    <!-- Section Santé -->
+    <div id="sante" class="section">
+      <label for="produit_sante">Produit Santé</label>
+      <select id="produit_sante" name="Produit_Sante__c">
+        <option value="">-- Choisir --</option>
+        <option value="Formule Essentielle">Formule Essentielle</option>
+        <option value="Formule Confort">Formule Confort</option>
+        <option value="Formule Premium">Formule Premium</option>
+      </select>
+
+      <label for="paiement">Mode de paiement</label>
+      <select id="paiement" name="Mode_Paiement__c">
+        <option value="">-- Choisir --</option>
+        <option value="Mensuel">Mensuel</option>
+        <option value="Annuel">Annuel</option>
+      </select>
+    </div>
+
+    <!-- Section IARD Auto -->
+    <div id="auto" class="section">
+      <label for="marque">Marque</label>
+      <input type="text" id="marque" name="Marque__c">
+
+      <label for="modele">Modèle</label>
+      <input type="text" id="modele" name="Modele__c">
+
+      <label for="annee">Année d'immatriculation</label>
+      <input type="text" id="annee" name="Annee_Immatriculation__c">
+
+      <label for="energie">Énergie</label>
+      <select id="energie" name="Energie__c">
+        <option value="">-- Choisir --</option>
+        <option value="Essence">Essence</option>
+        <option value="Diesel">Diesel</option>
+        <option value="Électrique">Électrique</option>
+        <option value="Hybride">Hybride</option>
+      </select>
+
+      <label for="puissance">Puissance fiscale</label>
+      <input type="number" id="puissance" name="Puissance_Fiscale__c">
+
+      <label for="couleur">Couleur</label>
+      <input type="text" id="couleur" name="Couleur__c">
+    </div>
+
+    <!-- Section MRH -->
+    <div id="mrh" class="section">
+      <label for="surface">Surface du logement (m²)</label>
+      <input type="number" id="surface" name="Surface_Logement__c">
+
+      <label for="residence">Type de résidence</label>
+      <select id="residence" name="Type_Residence__c">
+        <option value="">-- Choisir --</option>
+        <option value="Principale">Principale</option>
+        <option value="Secondaire">Secondaire</option>
+        <option value="Location">Location</option>
+      </select>
+
+      <label for="alarme">Système d'alarme présent ?</label>
+      <select id="alarme" name="Alarme__c">
+        <option value="">-- Choisir --</option>
+        <option value="Oui">Oui</option>
+        <option value="Non">Non</option>
+      </select>
+    </div>
+
+    <button type="submit" class="submit-btn">Envoyer</button>
+  </form>
+
+  <script>
+    function showSection(sectionId) {
+      const sections = ['sante', 'auto', 'mr
